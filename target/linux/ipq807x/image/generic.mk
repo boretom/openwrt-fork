@@ -71,6 +71,27 @@ define Device/edimax_cax1800
 endef
 TARGET_DEVICES += edimax_cax1800
 
+define Device/netgear_rax120v2
+	$(call Device/FitImage)
+	$(call Device/UbiFit)	
+	DEVICE_VENDOR := Netgear
+	DEVICE_MODEL := RAX120v2
+	BLOCKSIZE := 128k
+	PAGESIZE := 2048
+	DEVICE_DTS_CONFIG := config@hk01
+	SOC := ipq8074
+	KERNEL_SIZE := 29696k
+	NETGEAR_BOARD_ID := RAX120
+	NETGEAR_HW_ID := 29765589+0+512+1024+4x4+8x8
+	DEVICE_PACKAGES := ipq-wifi-netgear_rax120v2 kmod-spi-gpio \
+		kmod-spi-bitbang kmod-gpio-nxp-74hc164 kmod-hwmon-g762
+	IMAGES = factory.img sysupgrade.bin
+	IMAGE/factory.img := append-kernel | \
+		append-uImage-fakehdr filesystem | pad-to $$$$(KERNEL_SIZE) | \
+		append-ubi | netgear-dni
+endef
+TARGET_DEVICES += netgear_rax120v2
+
 define Device/netgear_wax218
 	$(call Device/FitImage)
 	$(call Device/UbiFit)
