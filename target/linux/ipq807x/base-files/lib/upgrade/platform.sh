@@ -69,6 +69,9 @@ platform_do_upgrade() {
 	edimax,cax1800)
 		nand_do_upgrade "$1"
 		;;
+	netgear,rax120v2)
+		nand_do_upgrade "$1"
+		;;
 	qnap,301w)
 		kernelname="0:HLOS"
 		rootfsname="rootfs"

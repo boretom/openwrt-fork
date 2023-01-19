@@ -9,6 +9,9 @@ case "$board" in
 edgecore,eap102)
 	ucidef_set_led_netdev "wan" "WAN" "green:wanpoe" "wan"
 	;;
+netgear,rax120v2)
+	ucidef_set_led_netdev "aqr" "AQR" "white:aqr" "lan5"
+	;;
 redmi,ax6|\
 xiaomi,ax3600)
 	ucidef_set_led_netdev "wan" "WAN" "blue:network" "wan"
