@@ -61,6 +61,9 @@ platform_do_upgrade() {
 	edimax,cax1800)
 		nand_do_upgrade "$1"
 		;;
+	netgear,rax120v2)
+		nand_do_upgrade "$1"
+		;;
 	qnap,301w)
 		kernelname="0:HLOS"
 		rootfsname="rootfs"
@@ -82,11 +85,6 @@ platform_do_upgrade() {
 
 		# Kernel and rootfs are placed in 2 different UBI
 		CI_KERN_UBIPART="ubi_kernel"
-		CI_ROOT_UBIPART="rootfs"
-		nand_do_upgrade "$1"
-		;;
-	netgear,rax120v2)
-		CI_KERN_UBIPART="kernel"
 		CI_ROOT_UBIPART="rootfs"
 		nand_do_upgrade "$1"
 		;;

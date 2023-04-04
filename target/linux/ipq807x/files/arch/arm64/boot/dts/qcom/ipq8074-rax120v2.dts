@@ -10,11 +10,8 @@
 #include <dt-bindings/leds/common.h>
 
 / {
-	#address-cells = <2>;
-	#size-cells = <2>;
 	model = "Netgear RAX120v2";
 	compatible = "netgear,rax120v2", "qcom,ipq8074";
-	interrupt-parent = <&intc>;
 
 	aliases {
 		serial0 = &blsp1_uart5;
@@ -29,12 +26,12 @@
 		ethernet2 = &dp3;
 		ethernet3 = &dp4;
 		ethernet4 = &dp5;
-		ethernet5 = &dp6;
+		ethernet5 = &dp6_syn;
 	};
 
 	chosen {
 		stdout-path = "serial0:115200n8";
-		bootargs-append = " root=/dev/ubiblock0_1";
+		bootargs-append = " ubi.mtd=rootfs root=/dev/ubiblock0_0";
 	};
 
 	keys {
@@ -119,20 +116,20 @@
 			color = <LED_COLOR_ID_WHITE>;
 		};
 
-		led_aqn_green {
-			label = "green:aqn";
+		led_aqr_green {
+			label = "green:aqr";
 			gpios = <&led_gpio 6 GPIO_ACTIVE_LOW>;
 			color = <LED_COLOR_ID_GREEN>;
 		};
 
-		led_aqn_red {
-			label = "red:aqn";
+		led_aqr_red {
+			label = "red:aqr";
 			gpios = <&led_gpio 10 GPIO_ACTIVE_LOW>;
 			color = <LED_COLOR_ID_RED>;
 		};
 
-		led_aqn_white {
-			label = "white:aqn";
+		led_aqr_white {
+			label = "white:aqr";
 			gpios = <&led_gpio 11 GPIO_ACTIVE_LOW>;
 			color = <LED_COLOR_ID_WHITE>;
 		};
@@ -146,16 +143,14 @@
 };
 
 &clocks {
-
 	g762_clk: fixedclk {
 		compatible = "fixed-clock";
 		#clock-cells = <0>;
 		clock-frequency = <32768>;
-  };
+	};
 };
 
 &tlmm {
-
 	mdio_pins: mdio-pins {
 		mdc {
 			pins = "gpio68";
@@ -287,7 +282,7 @@
 	label = "wan";
 };
 
-&dp6 {
+&dp6_syn {
 	status = "okay";
 	phy-handle = <&aqr111>;
 	label = "lan5";
@@ -303,11 +298,11 @@
 
 	fan: g762@3e {
 		compatible = "gmt,g762";
-				reg = <0x3e>;
-				clocks =<&g762_clk>;
-				fan_gear_mode = <0>;
-				fan_start = <1>;
-				pwm_polarity = <0>;
+		reg = <0x3e>;
+		clocks =<&g762_clk>;
+		fan_gear_mode = <0>;
+		fan_start = <1>;
+		pwm_polarity = <0>;
 	};
 };
 
@@ -332,71 +327,85 @@
 			partition@0 {
 				label = "0:sbl1";
 				reg = <0x00 0x100000>;
+				read-only;
 			};
 
 			partition@100000 {
 				label = "0:mibib";
 				reg = <0x100000 0x100000>;
+				read-only;
 			};
 
 			partition@200000 {
 				label = "0:bootconfig";
 				reg = <0x200000 0x80000>;
+				read-only;
 			};
 
 			partition@280000 {
 				label = "0:bootconfig_1";
 				reg = <0x280000 0x80000>;
+				read-only;
 			};
 
 			partition@300000 {
 				label = "0:qsee";
 				reg = <0x300000 0x300000>;
+				read-only;
 			};
 
 			partition@600000 {
 				label = "0:qsee_1";
 				reg = <0x600000 0x300000>;
+				read-only;
 			};
 
 			partition@900000 {
 				label = "0:devcfg";
 				reg = <0x900000 0x80000>;
+				read-only;
 			};
 
 			partition@980000 {
 				label = "0:devcfg_1";
 				reg = <0x980000 0x80000>;
+				read-only;
 			};
 
 			partition@a00000 {
 				label = "0:apdp";
 				reg = <0xa00000 0x80000>;
+				read-only;
 			};
 
 			partition@a80000 {
 				label = "0:apdp_1";
 				reg = <0xa80000 0x80000>;
+				read-only;
 			};
 
 			partition@b00000 {
 				label = "0:rpm";
 				reg = <0xb00000 0x80000>;
+				read-only;
 			};
 
 			partition@b80000 {
 				label = "0:rpm_1";
 				reg = <0xb80000 0x80000>;
+				read-only;
 			};
 
 			partition@c00000 {
 				label = "0:cdt";
 				reg = <0xc00000 0x80000>;
+				read-only;
 			};
 
 			partition@c80000 {
 				label = "0:cdt_1";
 				reg = <0xc80000 0x80000>;
+				read-only;
 			};
 
 			partition@d00000 {
@@ -407,56 +416,65 @@
 			partition@d80000 {
 				label = "0:appsbl";
 				reg = <0xd80000 0x100000>;
+				read-only;
 			};
 
 			partition@e80000 {
 				label = "0:appsbl_1";
 				reg = <0xe80000 0x100000>;
+				read-only;
 			};
 
 			partition@f80000 {
 				label = "0:art";
 				reg = <0xf80000 0x80000>;
+				read-only;
 			};
 
 			partition@1000000 {
 				label = "0:art.bak";
 				reg = <0x1000000 0x0080000>;
+				read-only;
 			};
 
 			partition@1080000 {
 				label = "config";
 				reg = <0x1080000 0x0100000>;
+				read-only;
 			};
 
 			partition@1180000 {
 				label = "boarddata1";
 				reg = <0x1180000 0x0100000>;
+				read-only;
 			};
 
 			partition@1280000 {
 				label = "boarddata2";
 				reg = <0x1280000 0x0100000>;
+				read-only;
 			};
 
 			partition@1380000 {
 				label = "pot";
 				reg = <0x1380000 0x0100000>;
+				read-only;
 			};
 
 			partition@1480000 {
 				label = "dnidata";
 				reg = <0x1480000 0x0500000>;
+				read-only;
 			};
 
-			kernel@1980000 {
+			partition@1980000 {
 				label = "kernel";
-				reg = <0x1980000 0x01D00000>;
+				reg = <0x1980000 0x1d00000>;
 			};
 
-			rootfs: partition@E880000 {
+			partition@e8800000 {
 				label = "rootfs";
-				reg = <0xE880000 0x11780000>;
+				reg = <0xe880000 0x11780000>;
 			};
 		};
 	};
